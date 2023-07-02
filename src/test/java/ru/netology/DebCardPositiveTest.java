@@ -9,7 +9,7 @@ import static com.codeborne.selenide.Selenide.open;
 
 class DebCardPositiveTest {
 @Test
-    void ShouldTestPositive() {
+    void shouldTestPositive() {
     open ("http://localhost:9999");
     SelenideElement form = $("[class='form form_size_m form_theme_alfa-on-white']");
     form.$("[name=name]").setValue("Кузьма Петров-Водкин");
