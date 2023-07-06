@@ -26,7 +26,7 @@ class DebCardNegativeTest {
         form.$("[name=phone]").setValue("+77777777777");
         form.$("[data-test-id=agreement]").click();
         form.$("[role=button]").click();
-        $("[data-test-id='name'] [class='input__sub']").shouldHave(exactText("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
+        $("[data-test-id='name'].input_invalid .input__sub").shouldHave(exactText("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
 
     }
 
@@ -36,11 +36,11 @@ class DebCardNegativeTest {
         form.$("[name=phone]").setValue("+77777777777");
         form.$("[data-test-id=agreement]").click();
         form.$("[role=button]").click();
-        $("[data-test-id='name'] [class='input__sub']").shouldHave(exactText("Поле обязательно для заполнения"));
+        $("[data-test-id='name'].input_invalid .input__sub").shouldHave(exactText("Поле обязательно для заполнения"));
 
     }
 
-   /* @Test
+ @Test
     void shouldTestOnlyFirstName() {
         open ("http://localhost:9999");
         SelenideElement form = $("[class='form form_size_m form_theme_alfa-on-white']");
@@ -48,8 +48,8 @@ class DebCardNegativeTest {
         form.$("[name=phone]").setValue("+77777777777");
         form.$("[data-test-id=agreement]").click();
         form.$("[role=button]").click();
-        $("[data-test-id='name'] [class='input__sub']").shouldHave(exactText("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
-    }*/
+        $("[data-test-id='name'] .input_invalid .input__sub").shouldHave(exactText("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
+    }
 
     @Test
     void shouldTestInvalidPhone() {
