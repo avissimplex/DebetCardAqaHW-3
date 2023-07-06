@@ -16,7 +16,7 @@ class DebCardPositiveTest {
     form.$("[name=phone]").setValue("+77777777777");
     form.$("[data-test-id=agreement]").click();
     form.$("[role=button]").click();
-    $(".Success_successBlock__2L3Cw").shouldHave(exactText("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время."));
+    $("[data-test-id='order-success']").shouldHave(exactText("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время."));
 
 }
 }

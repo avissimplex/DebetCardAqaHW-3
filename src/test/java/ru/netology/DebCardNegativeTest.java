@@ -1,80 +1,85 @@
 package ru.netology;
 
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.selector.ByText;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static com.codeborne.selenide.Condition.attribute;
 import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
 class DebCardNegativeTest {
+
+    @BeforeEach
+    void setup() {
+        open("http://localhost:9999");
+        Configuration.holdBrowserOpen = true;
+
+    }
     @Test
     void shouldTestInvalideName() {
-        open ("http://localhost:9999");
         SelenideElement form = $("[class='form form_size_m form_theme_alfa-on-white']");
         form.$("[name=name]").setValue("Kouzma Petrov-Vodkin");
         form.$("[name=phone]").setValue("+77777777777");
         form.$("[data-test-id=agreement]").click();
         form.$("[role=button]").click();
-        $("[class='input__control']").shouldHave(exactText("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
+        $("[data-test-id='name'] [class='input__sub']").shouldHave(exactText("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
 
     }
 
     @Test
-    void shouldTestOnlyEmptyName() {
-        open ("http://localhost:9999");
+    void shouldTestEmptyName() {
         SelenideElement form = $("[class='form form_size_m form_theme_alfa-on-white']");
         form.$("[name=phone]").setValue("+77777777777");
         form.$("[data-test-id=agreement]").click();
         form.$("[role=button]").click();
-        $("[class='input__top']").shouldHave(exactText("Поле обязательно для заполнения"));
+        $("[data-test-id='name'] [class='input__sub']").shouldHave(exactText("Поле обязательно для заполнения"));
 
     }
-/*
-    @Test
-    void shouldTestOnlyLastName() {
+
+   /* @Test
+    void shouldTestOnlyFirstName() {
         open ("http://localhost:9999");
         SelenideElement form = $("[class='form form_size_m form_theme_alfa-on-white']");
         form.$("[name=name]").setValue("Иванов");
         form.$("[name=phone]").setValue("+77777777777");
         form.$("[data-test-id=agreement]").click();
         form.$("[role=button]").click();
-        $(".Success_successBlock__2L3Cw").shouldHave(exactText("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время."));
+        $("[data-test-id='name'] [class='input__sub']").shouldHave(exactText("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
+    }*/
+
+    @Test
+    void shouldTestInvalidPhone() {
+        SelenideElement form = $("[class='form form_size_m form_theme_alfa-on-white']");
+        form.$("[name=name]").setValue("Кузьма Петров-Водкин");
+        form.$("[name=phone]").setValue("666");
+        form.$("[data-test-id=agreement]").click();
+        form.$("[role=button]").click();
+        $("[data-test-id='phone'] [class='input__sub']").shouldHave(exactText("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678."));
 
     }
 
     @Test
-    void shouldTestFalseNumberWithoutPlus() {
-        open ("http://localhost:9999");
+    void shouldTestNoPhone() {
         SelenideElement form = $("[class='form form_size_m form_theme_alfa-on-white']");
-        form.$("[name=name]").setValue("Кузьма Петров-Водкин");
-        form.$("[name=phone]").setValue("77777777777");
+        form.$("[name=name]").setValue("Мария Семенова");
         form.$("[data-test-id=agreement]").click();
         form.$("[role=button]").click();
-        $(".Success_successBlock__2L3Cw").shouldHave(exactText("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время."));
+        $("[data-test-id='phone'] [class='input__sub']").shouldHave(exactText("Поле обязательно для заполнения"));
 
     }
 
-    @Test
-    void shouldTestFalseNumberWithPlus() {
-        open ("http://localhost:9999");
-        SelenideElement form = $("[class='form form_size_m form_theme_alfa-on-white']");
-        form.$("[name=name]").setValue("Кузьма Петров-Водкин");
-        form.$("[name=phone]").setValue("+1");
-        form.$("[data-test-id=agreement]").click();
-        form.$("[role=button]").click();
-        $(".Success_successBlock__2L3Cw").shouldHave(exactText("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время."));
-
-    }
 
     @Test
     void shouldTestNoAgreement() {
-        open ("http://localhost:9999");
         SelenideElement form = $("[class='form form_size_m form_theme_alfa-on-white']");
-        form.$("[name=name]").setValue("Кузьма Петров-Водкин");
-        form.$("[name=phone]").setValue("77777777777");
+        form.$("[name=name]").setValue("Иван Иванов");
+        form.$("[name=phone]").setValue("+79093442632");
         form.$("[role=button]").click();
-        $(".Success_successBlock__2L3Cw").shouldHave(exactText("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время."));
+        $("[data-test-id='agreement']").shouldHave(attribute("class", "checkbox checkbox_size_m checkbox_theme_alfa-on-white input_invalid"));
 
-    }*/
+    }
 }
