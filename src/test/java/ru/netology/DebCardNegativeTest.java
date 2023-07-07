@@ -2,7 +2,6 @@ package ru.netology;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.selector.ByText;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,8 +18,9 @@ class DebCardNegativeTest {
         Configuration.holdBrowserOpen = true;
 
     }
+
     @Test
-    void shouldTestInvalideName() {
+    void shouldTestInvalidName() {
         SelenideElement form = $("[class='form form_size_m form_theme_alfa-on-white']");
         form.$("[name=name]").setValue("Kouzma Petrov-Vodkin");
         form.$("[name=phone]").setValue("+77777777777");
@@ -40,9 +40,8 @@ class DebCardNegativeTest {
 
     }
 
- @Test
+    @Test
     void shouldTestOnlyFirstName() {
-        open ("http://localhost:9999");
         SelenideElement form = $("[class='form form_size_m form_theme_alfa-on-white']");
         form.$("[name=name]").setValue("Иванов");
         form.$("[name=phone]").setValue("+77777777777");
@@ -58,7 +57,7 @@ class DebCardNegativeTest {
         form.$("[name=phone]").setValue("666");
         form.$("[data-test-id=agreement]").click();
         form.$("[role=button]").click();
-        $("[data-test-id='phone'] [class='input__sub']").shouldHave(exactText("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678."));
+        $("[data-test-id='phone'].input_invalid .input__sub").shouldHave(exactText("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678."));
 
     }
 
@@ -68,7 +67,7 @@ class DebCardNegativeTest {
         form.$("[name=name]").setValue("Мария Семенова");
         form.$("[data-test-id=agreement]").click();
         form.$("[role=button]").click();
-        $("[data-test-id='phone'] [class='input__sub']").shouldHave(exactText("Поле обязательно для заполнения"));
+        $("[data-test-id='phone'].input_invalid .input__sub").shouldHave(exactText("Поле обязательно для заполнения"));
 
     }
 
